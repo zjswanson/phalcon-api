@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>Ajax Requests!</h1>
+        <h3>With vanilla HTML and AJAX</h3>
+
+        <h2>Press the button to load something with AJAX</h2>
+        <button type="button" onclick="ajaxGet()">Load Stuff!</button>
+
+        <h4>Response Name</h4>
+        <ul>
+            <li id="responseName">Nothing Yet</li>
+        </ul>
+        <h4>Response Purpose</h4>
+        <ul>
+            <li id="responsePurpose">Who Knows?</li>
+        </ul>
+
+
+        <h4>Try Posting!</h4>
+        <h5>Give us some details about the object you will post</h5>
+        <div class="form">
+            <label for="name">Your Object's Name</label>
+            <input type="text" name="name" id="name">
+            <label for="purpose">Your Object's Purpose</label>
+            <input type="text" purpose="purpose" id="purpose">
+            <button type="button" onclick="ajaxPost()" name="button">Click here to post your object</button>
+        </div>
+
+        <script>
+            function ajaxGet() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var response = JSON.parse(this.response);
+                        document.getElementById("responseName").innerHTML =
+                        response.name;
+                        document.getElementById("responsePurpose").innerHTML =
+                        response.purpose;
+                    }
+                };
+                xhttp.open("GET", "http://localhost:8888/endpoint/get", true);
+                xhttp.send();
+            }
+
+
+            function ajaxPost() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var response = JSON.parse(this.response);
+                        console.log(response);
+                        document.getElementById("responseName").innerHTML =
+                        response.name;
+                        document.getElementById("responsePurpose").innerHTML =
+                        response.purpose;
+                    }
+                };
+
+
+                var name = "name=" + encodeURIComponent(document.getElementById('name').value);
+                var purpose = "purpose=" + encodeURIComponent(document.getElementById('purpose').value);
+                console.log(name);
+                console.log(purpose);
+                var query = name + "&" + purpose;
+                console.log(query);
+                query.replace("/\%20/g", "+");
+
+                xhttp.open("POST", "http://localhost:8888/endpoint/post", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send(query);
+                console.log(query);
+            }
+
+
+        </script>
+
+    </body>
+</html>
