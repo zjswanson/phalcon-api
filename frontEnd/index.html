@@ -2,33 +2,65 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <style media="screen">
+            .head {
+                height: 150px;
+                border-radius: 3px;
+                padding: 15px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+        </style>
         <title></title>
     </head>
     <body>
-        <h1>Ajax Requests!</h1>
-        <h3>With vanilla HTML and AJAX</h3>
-
-        <h2>Press the button to load something with AJAX</h2>
-        <button type="button" onclick="ajaxGet()">Load Stuff!</button>
-
-        <h4>Response Name</h4>
-        <ul>
-            <li id="responseName">Nothing Yet</li>
-        </ul>
-        <h4>Response Purpose</h4>
-        <ul>
-            <li id="responsePurpose">Who Knows?</li>
-        </ul>
-
-
-        <h4>Try Posting!</h4>
-        <h5>Give us some details about the object you will post</h5>
-        <div class="form">
-            <label for="name">Your Object's Name</label>
-            <input type="text" name="name" id="name">
-            <label for="purpose">Your Object's Purpose</label>
-            <input type="text" purpose="purpose" id="purpose">
-            <button type="button" onclick="ajaxPost()" name="button">Click here to post your object</button>
+        <div class="container">
+            <div class="text-info bg-info head">
+                <h1>Ajax Requests!</h1>
+                <h3>With vanilla HTML and AJAX</h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h2>Server Response</h2>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Response Name</h4>
+                            <ul>
+                                <li id="responseName">Nothing Yet</li>
+                            </ul>
+                            <h4>Response Purpose</h4>
+                            <ul>
+                                <li id="responsePurpose">Who Knows?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-9">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h2>Loading Controls</h2>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Load the Server's default response:</h4>
+                            <button type="button" onclick="ajaxGet()">Load Stuff!</button>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Try Posting your own info!</h4>
+                            <h5>Send an object to the server and get a response back:</h5>
+                            <form >
+                                <label for="name">Your Object's Name</label>
+                                <input class="form-control" type="text" name="name" id="name">
+                                <label for="purpose">Your Object's Purpose</label>
+                                <input class="form-control" type="text" purpose="purpose" id="purpose">
+                                <button type="button" onclick="ajaxPost()" name="button">Click here to post your object</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script>
@@ -64,16 +96,12 @@
 
                 var name = "name=" + encodeURIComponent(document.getElementById('name').value);
                 var purpose = "purpose=" + encodeURIComponent(document.getElementById('purpose').value);
-                console.log(name);
-                console.log(purpose);
                 var query = name + "&" + purpose;
-                console.log(query);
                 query.replace("/\%20/g", "+");
 
                 xhttp.open("POST", "http://localhost:8888/endpoint/post", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(query);
-                console.log(query);
             }
 
 

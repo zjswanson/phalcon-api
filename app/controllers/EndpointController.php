@@ -16,8 +16,8 @@ class EndpointController extends \Phalcon\Mvc\Controller
 
        $data =
        [
-           "name" => "Object",
-           "purpose" => "Do Stuff"
+           "name" => "Server Data Object",
+           "purpose" => "Arrive from the Server"
        ];
 
        $string = "I'm working";
@@ -34,12 +34,9 @@ class EndpointController extends \Phalcon\Mvc\Controller
         $response = new Response();
         $data = [];
 
-        $data["name"] = "Bill";
-        $data["purpose"] = "Test REsponse";
         if ($this->request->isPost()) {
-            $data["name"] = $_REQUEST['name'];
-            $data["purpose"] = $_REQUEST['purpose'];
-
+            $data["name"] = $_REQUEST['name'] ? $_REQUEST['name'] : "The name field was empty";
+            $data["purpose"] = $_REQUEST['purpose'] ? $_REQUEST['purpose'] : "The purpose field was empty";
         }
 
         $response->setHeader("Access-Control-Allow-Origin", "*");
